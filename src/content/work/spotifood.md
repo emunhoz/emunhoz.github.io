@@ -6,7 +6,7 @@ year: "2021 — 2026"
 order: 2
 outcome: Lighthouse 95 · 100 · 100 · 100, 94 unit and component tests, and initial JS down from 264 kB to 222 kB with no animation or UI library.
 link: https://spotifood-ten.vercel.app
-draft: true
+draft: false
 ---
 
 [Live app](https://spotifood-ten.vercel.app) · [Storybook](https://spotifood-components.vercel.app) · [Figma](https://www.figma.com/design/ZYNcMs2B7uDiFCmw9mBvZQ) · [GitHub](https://github.com/emunhoz/spotifood)
