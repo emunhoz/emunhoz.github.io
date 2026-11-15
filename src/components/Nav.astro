@@ -42,13 +42,13 @@ const isActive = (href: string): boolean =>
 <style>
   .burger {
     position: fixed;
-    width: 38px;
-    height: 38px;
+    width: 48px;
+    height: 48px;
     padding: 0;
     border: 0;
     cursor: pointer;
-    top: 1rem;
-    left: 1.25rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    right: 1.25rem;
     z-index: 2;
     background-color: color-mix(in srgb, var(--bg) 70%, transparent);
   }
@@ -98,7 +98,9 @@ const isActive = (href: string): boolean =>
     background-color: var(--bg);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+    box-sizing: border-box;
     z-index: 1;
     transform: translateY(100%);
     transition: opacity 200ms;
@@ -138,6 +140,7 @@ const isActive = (href: string): boolean =>
       display: block;
       transform: translateY(0);
       background-color: transparent;
+      padding-bottom: 0;
     }
     li {
       font-size: 1rem;
