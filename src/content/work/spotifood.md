@@ -3,7 +3,7 @@ title: Spotifood
 summary: Playlists to go with your food order. Designed in Figma, built as a small design system plus the app that consumes it.
 role: Design & front-end engineering
 year: "2021 — 2026"
-order: 1
+order: 2
 outcome: Lighthouse 95 · 100 · 100 · 100, 94 unit and component tests, and initial JS down from 264 kB to 222 kB with no animation or UI library.
 link: https://spotifood-ten.vercel.app
 draft: true
