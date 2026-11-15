@@ -10,6 +10,7 @@ import Social from "../components/Social.astro";
       <span class="handle">@emunhoz</span>
       <h2>I design user interfaces and engineer digital products.</h2>
       <p class="bio">Designer turned engineer. Now building e-commerce at <a href="https://www.kpn.com/shop/" target="_blank" rel="noopener">KPN</a>, Amsterdam, NL.</p>
+      <p class="bio">Side project: <a href="https://elye.app/" target="_blank" rel="noopener">Elye</a>, a macOS menu-bar app for healthier eye breaks.</p>
       <Social />
     </div>
   </div>
@@ -42,6 +43,9 @@ import Social from "../components/Social.astro";
     .container > div > :global(:nth-child(5)) {
       animation-delay: 240ms;
     }
+    .container > div > :global(:nth-child(6)) {
+      animation-delay: 300ms;
+    }
   }
   @keyframes rise {
     from {
@@ -61,10 +65,13 @@ import Social from "../components/Social.astro";
     line-height: 1.25;
   }
   .bio {
-    margin: 0 0 1.5rem;
+    margin: 0 0 0.5rem;
     font-size: 1rem;
     line-height: 1.5;
     color: var(--link);
+  }
+  .bio:last-of-type {
+    margin-bottom: 1.5rem;
   }
   .bio a {
     color: var(--text);
