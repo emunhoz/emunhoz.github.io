@@ -1,0 +1,155 @@
+---
+import Base from "../layouts/Base.astro";
+
+const COLORS = [
+  { token: "--bg", use: "Page background" },
+  { token: "--text", use: "Body text, active links" },
+  { token: "--link", use: "Links and secondary text" },
+  { token: "--accent", use: "Brand detail, hover underline" },
+  { token: "--border", use: "Dividers" },
+];
+
+const TYPE_SCALE = [
+  { size: "3rem", weight: 500, use: "Hero name (desktop)" },
+  { size: "2.25rem", weight: 500, use: "Page titles" },
+  { size: "1.75rem", weight: 400, use: "Hero headline (mobile)" },
+  { size: "1rem", weight: 300, use: "Body" },
+  { size: "0.8rem", weight: 300, use: "Footer" },
+];
+
+const DECISIONS = [
+  {
+    title: "Contrast before taste",
+    body: "The template's #9b9b9b gray failed WCAG AA (2.77:1). It became #767676, the lightest gray that still passes at 4.54:1.",
+  },
+  {
+    title: "Menu in the thumb zone",
+    body: "On mobile the menu button sits bottom-right with a 48px target, where a thumb actually reaches.",
+  },
+  {
+    title: "Light and dark from the same tokens",
+    body: "Components only reference tokens. Dark mode redefines five values under prefers-color-scheme; nothing else changes.",
+  },
+  {
+    title: "Almost no JavaScript",
+    body: "Static Astro pages with scoped CSS. The only script toggles the mobile menu. Page transitions are native CSS view transitions.",
+  },
+  {
+    title: "Motion that steps aside",
+    body: "Hero entrance and page transitions only run when the OS allows motion (prefers-reduced-motion).",
+  },
+];
+---
+
+<Base title="System" description="The design tokens and decisions behind this site.">
+  <div class="container">
+    <h1>How this site is built<span class="fancy">.</span></h1>
+    <p class="lead">A tiny design system: a few tokens, one typeface, and decisions written down. Switch your OS theme and the swatches below update live.</p>
+
+    <h2>Color</h2>
+    <ul class="swatches">
+      {
+        COLORS.map(({ token, use }) => (
+          <li>
+            <span class="swatch" style={`background: var(${token})`} />
+            <code>{token}</code>
+            <span class="muted">{use}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>Type</h2>
+    <p class="muted">Ubuntu 300 / 400 / 500, Ubuntu Mono for code.</p>
+    <ul class="type">
+      {
+        TYPE_SCALE.map(({ size, weight, use }) => (
+          <li>
+            <span style={`font-size: ${size}; font-weight: ${weight}`}>Aa</span>
+            <span class="muted">
+              {size} · {weight} · {use}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>Decisions</h2>
+    <dl>
+      {
+        DECISIONS.map(({ title, body }) => (
+          <>
+            <dt>{title}</dt>
+            <dd>{body}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </div>
+</Base>
+
+<style>
+  .container {
+    max-width: 36rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+  h1 {
+    margin: 0 0 1rem;
+    font-size: 2.25rem;
+    font-weight: 500;
+  }
+  .fancy {
+    color: var(--accent);
+  }
+  .lead {
+    margin: 0;
+    line-height: 1.5;
+  }
+  h2 {
+    margin: 2.5rem 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .muted {
+    color: var(--link);
+  }
+  .swatches li {
+    display: grid;
+    grid-template-columns: 2rem 6rem 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .swatch {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+  }
+  .type li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .type li > span:first-child {
+    min-width: 4.5rem;
+    line-height: 1.2;
+  }
+  dt {
+    font-weight: 500;
+    margin-top: 1.25rem;
+  }
+  dd {
+    margin: 0.25rem 0 0;
+    line-height: 1.5;
+  }
+</style>

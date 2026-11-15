@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { getPublishedWork } from "../lib/work";
 
-const STATIC_PATHS = ["/", "/work/", "/blog/"];
+const STATIC_PATHS = ["/", "/work/", "/blog/", "/system/"];
 
 export const GET: APIRoute = async ({ site }) => {
   const [posts, work] = await Promise.all([getCollection("posts"), getPublishedWork()]);
