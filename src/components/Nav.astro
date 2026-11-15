@@ -98,9 +98,7 @@ const isActive = (href: string): boolean =>
     background-color: var(--bg);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
-    box-sizing: border-box;
+    justify-content: center;
     z-index: 1;
     transform: translateY(100%);
     transition: opacity 200ms;
@@ -140,7 +138,6 @@ const isActive = (href: string): boolean =>
       display: block;
       transform: translateY(0);
       background-color: transparent;
-      padding-bottom: 0;
     }
     li {
       font-size: 1rem;
