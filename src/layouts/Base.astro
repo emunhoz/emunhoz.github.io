@@ -64,7 +64,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   }
   main {
     display: flex;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    min-width: 0;
   }
   @media (min-width: 769px) {
     .root {
