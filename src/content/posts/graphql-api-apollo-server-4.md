@@ -1,7 +1,7 @@
 ---
-title: "Create and Deploy your first GraphQL API with Apollo Server 4, TypeGraphQL and Render"
+title: "Create and Deploy your first GraphQL API with Apollo Server 4, TypeGraphQL, Railway and Render"
 date: 2023-06-08
-description: "Build a GraphQL API with Apollo Server 4 and TypeGraphQL, then deploy it to Render."
+description: "Build a GraphQL API with Apollo Server 4 and TypeGraphQL, then deploy it to Railway and Render."
 ---
 
 TL;DR
