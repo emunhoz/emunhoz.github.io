@@ -1,0 +1,60 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getPublishedWork } from "../../lib/work";
+
+const entries = await getPublishedWork();
+---
+
+<Base title="Work" description="Selected work: product UI I designed and engineered.">
+  <div class="container">
+    {entries.length === 0 && <p>Case studies are on their way.</p>}
+    <ul>
+      {
+        entries.map((entry) => (
+          <li>
+            <a href={`/work/${entry.id}/`}>
+              <span class="meta">{entry.data.role} · {entry.data.year}</span>
+              <h2>{entry.data.title}</h2>
+              <p>{entry.data.summary}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .container {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+  a {
+    color: var(--text);
+    display: inline-block;
+    max-width: 36rem;
+  }
+  .meta {
+    color: var(--link);
+  }
+  h2 {
+    margin: 0;
+    font-weight: 500;
+  }
+  p {
+    margin: 0.25rem 0 0;
+    color: var(--link);
+    line-height: 1.5;
+  }
+</style>
