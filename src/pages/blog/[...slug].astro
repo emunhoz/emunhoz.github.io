@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Social from "../../components/Social.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <div class="container">
+    <article>
+      <header>
+        <h1>{post.data.title}</h1>
+        <FormattedDate date={post.data.date} />
+      </header>
+      <div class="content"><Content /></div>
+    </article>
+    <footer><Social /></footer>
+  </div>
+</Base>
+
+<style>
+  .container {
+    max-width: 36rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2.25rem;
+    font-weight: 500;
+  }
+  footer {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+  }
+  .content :global(p) {
+    line-height: 1.5rem;
+    margin: 1.5rem 0 0;
+  }
+  .content :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .content :global(:is(h2, h3, h4)) {
+    margin: 2rem 0 0;
+    line-height: 1.25em;
+    font-weight: 500;
+  }
+  .content :global(pre) {
+    line-height: 1.25rem;
+    padding: 1rem;
+    overflow: auto;
+    margin: 1.75rem 0 0;
+  }
+  .content :global(:not(pre) > code) {
+    font-size: 85%;
+    padding: 0.2em 0.4em;
+    background-color: color-mix(in srgb, var(--text) 6%, transparent);
+    border-radius: 3px;
+  }
+  .content :global(blockquote) {
+    margin: 1.5rem 1rem 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+    color: var(--link);
+  }
+  .content :global(img) {
+    max-width: 100%;
+  }
+</style>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  date: Date;
+}
+
+const DATE_FORMAT = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
+const { date } = Astro.props;
+---
+
+<time datetime={date.toISOString()}>{DATE_FORMAT.format(date)}</time>
+
+<style>
+  time {
+    color: var(--link);
+  }
+</style>

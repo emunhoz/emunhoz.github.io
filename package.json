@@ -1,0 +1,15 @@
+{
+  "name": "emunhoz.github.io",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --bun astro dev",
+    "build": "bun --bun astro build",
+    "preview": "bun --bun astro preview",
+    "check": "bun --bun astro check"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.6",
+    "astro": "^7.4.12"
+  }
+}

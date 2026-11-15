@@ -1,0 +1,147 @@
+---
+const LINKS = [
+  { href: "/", label: "home" },
+  { href: "/blog", label: "blog" },
+];
+
+const path = Astro.url.pathname;
+const isActive = (href: string): boolean =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<nav>
+  <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+    <span class="meat meat-1"></span>
+    <span class="meat meat-2"></span>
+    <span class="meat meat-3"></span>
+  </button>
+  <div class="container">
+    <ul id="nav-links">
+      {
+        LINKS.map(({ href, label }) => (
+          <li>
+            <a href={href} class:list={{ active: isActive(href) }} aria-current={isActive(href) ? "page" : undefined}>
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector("nav");
+  const burger = nav?.querySelector<HTMLButtonElement>(".burger");
+  burger?.addEventListener("click", () => {
+    const isOpen = nav?.classList.toggle("open") ?? false;
+    burger.setAttribute("aria-expanded", String(isOpen));
+  });
+</script>
+
+<style>
+  .burger {
+    position: fixed;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    top: 1rem;
+    left: 1.25rem;
+    z-index: 2;
+    background-color: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+  .meat {
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background: var(--text);
+    top: calc(50% - 2px / 2);
+    left: calc(50% - 28px / 2);
+    transition: all 150ms ease-in;
+  }
+  .meat-1 {
+    transform: translateY(-10px);
+  }
+  .meat-2 {
+    width: calc(28px - 6px);
+  }
+  .meat-3 {
+    transform: translateY(10px);
+  }
+  .open .meat-1 {
+    transform: rotate(45deg);
+  }
+  .open .meat-2 {
+    opacity: 0;
+  }
+  .open .meat-3 {
+    transform: rotate(-45deg);
+  }
+
+  .container {
+    width: 0;
+  }
+  ul {
+    visibility: hidden;
+    opacity: 0;
+    width: 100%;
+    height: 100vh;
+    text-align: right;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+    transform: translateY(100%);
+    transition: opacity 200ms;
+  }
+  .open ul {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  li {
+    margin-bottom: 1.75rem;
+    font-size: 2rem;
+    padding: 0 1.5rem 0 0;
+  }
+  li:last-child {
+    margin-bottom: 0;
+  }
+  a.active {
+    color: var(--text);
+  }
+
+  @media (min-width: 769px) {
+    .burger {
+      display: none;
+    }
+    .container {
+      width: 7rem;
+      display: block;
+    }
+    ul {
+      visibility: visible;
+      opacity: 1;
+      width: 7rem;
+      height: auto;
+      top: auto;
+      left: auto;
+      display: block;
+      transform: translateY(0);
+      background-color: transparent;
+    }
+    li {
+      font-size: 1rem;
+      padding: 0;
+    }
+  }
+</style>
