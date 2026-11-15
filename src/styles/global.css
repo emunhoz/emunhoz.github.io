@@ -76,3 +76,9 @@ pre {
     background-color: var(--shiki-dark-bg) !important;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
