@@ -32,7 +32,7 @@ const LINKS = [
 <div>
   {
     LINKS.map(({ title, href, shapes }) => (
-      <a title={title} aria-label={title} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener">
+      <a title={title} aria-label={title} data-umami-event={`social-${title.toLowerCase()}`} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener">
         <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" set:html={shapes.join("")} />
       </a>
     ))

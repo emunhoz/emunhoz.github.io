@@ -23,7 +23,7 @@ const { Content } = await render(entry);
       <div class="content"><Content /></div>
     </article>
     <footer>
-      {entry.data.link && <a href={entry.data.link} target="_blank" rel="noopener">Visit project</a>}
+      {entry.data.link && <a href={entry.data.link} target="_blank" rel="noopener" data-umami-event="visit-project" data-umami-event-project={entry.id}>Visit project</a>}
     </footer>
   </div>
 </Base>

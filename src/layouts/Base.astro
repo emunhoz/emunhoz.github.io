@@ -8,6 +8,7 @@ interface Props {
 }
 
 const SITE_NAME = "Eder Munhoz";
+const UMAMI_WEBSITE_ID = "1ddc9403-5910-4988-b46b-24f31dd36055";
 const DEFAULT_DESCRIPTION = "Eder Munhoz dos Santos — Design Engineer based in Amsterdam.";
 
 const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
@@ -37,6 +38,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&family=Ubuntu+Mono&display=swap"
       rel="stylesheet"
     />
+    {
+      import.meta.env.PROD && (
+        <script
+          is:inline
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id={UMAMI_WEBSITE_ID}
+          data-domains="emunhoz.github.io"
+        />
+      )
+    }
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
