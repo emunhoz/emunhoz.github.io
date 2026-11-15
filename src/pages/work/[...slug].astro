@@ -1,0 +1,92 @@
+---
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { getPublishedWork, type WorkEntry } from "../../lib/work";
+
+export async function getStaticPaths() {
+  const entries = await getPublishedWork();
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props as { entry: WorkEntry };
+const { Content } = await render(entry);
+---
+
+<Base title={entry.data.title} description={entry.data.summary}>
+  <div class="container">
+    <article>
+      <header>
+        <h1>{entry.data.title}</h1>
+        <span class="meta">{entry.data.role} · {entry.data.year}</span>
+        {entry.data.outcome && <p class="outcome">{entry.data.outcome}</p>}
+      </header>
+      <div class="content"><Content /></div>
+    </article>
+    <footer>
+      {entry.data.link && <a href={entry.data.link} target="_blank" rel="noopener">Visit project</a>}
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .container {
+    max-width: 36rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2.25rem;
+    font-weight: 500;
+  }
+  .meta {
+    color: var(--link);
+  }
+  .outcome {
+    margin: 1rem 0 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent);
+  }
+  footer {
+    margin-top: 3rem;
+  }
+  footer a {
+    color: var(--accent);
+  }
+  .content :global(p) {
+    line-height: 1.5rem;
+    margin: 1.5rem 0 0;
+  }
+  .content :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .content :global(:is(h2, h3, h4)) {
+    margin: 2rem 0 0;
+    line-height: 1.25em;
+    font-weight: 500;
+  }
+  .content :global(pre) {
+    line-height: 1.25rem;
+    padding: 1rem;
+    overflow: auto;
+    margin: 1.75rem 0 0;
+  }
+  .content :global(:not(pre) > code) {
+    font-size: 85%;
+    padding: 0.2em 0.4em;
+    background-color: color-mix(in srgb, var(--text) 6%, transparent);
+    border-radius: 3px;
+  }
+  .content :global(blockquote) {
+    margin: 1.5rem 1rem 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+    color: var(--link);
+  }
+  .content :global(img) {
+    max-width: 100%;
+  }
+</style>

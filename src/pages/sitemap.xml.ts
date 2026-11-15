@@ -1,11 +1,16 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import { getPublishedWork } from "../lib/work";
 
-const STATIC_PATHS = ["/", "/blog/"];
+const STATIC_PATHS = ["/", "/work/", "/blog/"];
 
 export const GET: APIRoute = async ({ site }) => {
-  const posts = await getCollection("posts");
-  const paths = [...STATIC_PATHS, ...posts.map((post) => `/blog/${post.id}/`)];
+  const [posts, work] = await Promise.all([getCollection("posts"), getPublishedWork()]);
+  const paths = [
+    ...STATIC_PATHS,
+    ...work.map((entry) => `/work/${entry.id}/`),
+    ...posts.map((post) => `/blog/${post.id}/`),
+  ];
   const urls = paths.map((path) => `<url><loc>${new URL(path, site)}</loc></url>`).join("");
 
   return new Response(
