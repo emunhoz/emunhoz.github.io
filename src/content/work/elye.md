@@ -6,7 +6,7 @@ year: "2026"
 order: 1
 outcome: "Pre-launch: 36 releases in about five weeks, a waitlist site, and the end-of-day blurry eyes it was built for are gone."
 link: https://elye.app/
-draft: true
+draft: false
 ---
 
 [Website and 30s film](https://elye.app/)
