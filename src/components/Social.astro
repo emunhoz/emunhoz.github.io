@@ -40,12 +40,16 @@ const LINKS = [
 </div>
 
 <style>
+  /* Icons are 22px; 11px padding gives a 44px touch target, and the
+     negative margin plus wider gap keep the visual spacing unchanged. */
   div {
     display: flex;
-    gap: 1.5rem;
+    gap: calc(1.5rem + 22px);
   }
   a {
     display: inline-flex;
+    padding: 11px;
+    margin: -11px;
     color: var(--link);
   }
   a:hover,

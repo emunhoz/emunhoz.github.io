@@ -94,6 +94,12 @@ import Social from "../components/Social.astro";
     font-size: 0.85rem;
     color: var(--text);
     transition: border-color 0.3s ease;
+    position: relative;
+  }
+  .pill::before {
+    content: "";
+    position: absolute;
+    inset: -6px 0;
   }
   .pill:hover,
   .pill:focus-visible {
