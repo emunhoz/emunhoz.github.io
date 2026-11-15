@@ -3,7 +3,7 @@ title: Elye
 summary: A macOS menu-bar app that automates the 20-20-20 eye-break rule, and pauses itself when you're on a call or away.
 role: Product, design & engineering
 year: "2025"
-order: 1
+order: 2
 outcome: Owned end to end — product, brand, website and release pipeline.
 link: https://elye.app/
 draft: true
