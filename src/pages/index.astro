@@ -9,6 +9,7 @@ import Social from "../components/Social.astro";
       <h1>Hi, I'm Eder<span class="fancy">.</span></h1>
       <span class="handle">@emunhoz</span>
       <h2>I design, code, and ship products.</h2>
+      <p class="bio">9+ years building interfaces. Currently at KPN, Amsterdam.</p>
       <Social />
     </div>
   </div>
@@ -31,6 +32,12 @@ import Social from "../components/Social.astro";
     font-size: 1.75rem;
     font-weight: 400;
     line-height: 1.25;
+  }
+  .bio {
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--link);
   }
   .fancy {
     color: var(--accent);
