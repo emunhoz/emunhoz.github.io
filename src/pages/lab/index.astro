@@ -1,0 +1,73 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+
+const experiments = (await getCollection("lab")).toSorted(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+); // O(n log n)
+---
+
+<Base title="Lab" description="Small UI experiments, each with its source.">
+  <div class="container">
+    <ul>
+      {
+        experiments.map((experiment, i) => (
+          <li class="rise" style={`--i: ${i}`}>
+            <FormattedDate date={experiment.data.date} />
+            <h2>{experiment.data.title}</h2>
+            <p>{experiment.data.summary}</p>
+            <div class="links">
+              {experiment.data.demo && (
+                <a href={experiment.data.demo}>
+                  Try it <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              )}
+              <a href={experiment.data.source} target="_blank" rel="noopener">
+                Source <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .container {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    margin-bottom: 2.5rem;
+    max-width: 36rem;
+    color: var(--link);
+  }
+  h2 {
+    margin: 0;
+    font-weight: 500;
+    color: var(--text);
+  }
+  p {
+    margin: 0.25rem 0 0;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+  }
+  .links {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .links a {
+    color: var(--accent);
+  }
+</style>

@@ -25,4 +25,15 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { posts, work };
+const lab = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/lab" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    summary: z.string(),
+    source: z.url(),
+    demo: z.string().optional(),
+  }),
+});
+
+export const collections = { posts, work, lab };
