@@ -14,7 +14,7 @@ const entries = await getPublishedWork();
           <li class="rise" style={`--i: ${i}`}>
             <a href={`/work/${entry.id}/`}>
               <span class="meta">{entry.data.role} · {entry.data.year}</span>
-              <h2 style={`--vt-name: title-${entry.id}`}>{entry.data.title}</h2>
+              <h2>{entry.data.title}</h2>
               <p>{entry.data.summary}</p>
             </a>
           </li>
@@ -51,7 +51,6 @@ const entries = await getPublishedWork();
   h2 {
     margin: 0;
     font-weight: 500;
-    width: fit-content;
   }
   h2::after {
     content: " →";
@@ -60,11 +59,6 @@ const entries = await getPublishedWork();
   }
   a:is(:hover, :focus-visible) h2::after {
     opacity: 1;
-  }
-  /* Only the clicked title gets a name: named elements skip the .rise entrance */
-  a:is(:hover, :focus) h2 {
-    view-transition-name: var(--vt-name);
-    view-transition-class: title;
   }
   @media (prefers-reduced-motion: no-preference) {
     h2,
