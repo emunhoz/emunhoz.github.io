@@ -23,7 +23,7 @@
 html,
 body {
   margin: 0;
-  font-family: "Ubuntu", sans-serif;
+  font-family: Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans", source-sans-pro, sans-serif;
   background-color: var(--bg);
   color: var(--text);
   font-weight: 300;
@@ -66,7 +66,7 @@ a:focus-visible {
 
 code,
 pre {
-  font-family: "Ubuntu Mono", monospace;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Cascadia Code", "Ubuntu Mono", monospace;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -32,12 +32,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#fff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111" media="(prefers-color-scheme: dark)" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&family=Ubuntu+Mono&display=swap"
-      rel="stylesheet"
-    />
     {
       import.meta.env.PROD && (
         <script
