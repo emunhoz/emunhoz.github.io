@@ -20,7 +20,7 @@ const { Content } = await render(entry);
         <span class="meta rise" style="--i: 1">{entry.data.role} · {entry.data.year}</span>
         {entry.data.outcome && <p class="outcome rise" style="--i: 2">{entry.data.outcome}</p>}
       </header>
-      <div class="content rise" style="--i: 3"><Content /></div>
+      <div class="content prose rise" style="--i: 3"><Content /></div>
     </article>
     <footer>
       {entry.data.link && <a href={entry.data.link} target="_blank" rel="noopener" data-umami-event="visit-project" data-umami-event-project={entry.id}>Visit project</a>}
@@ -46,6 +46,8 @@ const { Content } = await render(entry);
   }
   .outcome {
     margin: 1rem 0 0;
+    font-size: clamp(1.0625rem, 0.95rem + 0.6vw, 1.1875rem);
+    line-height: 1.6;
     padding-left: 1rem;
     border-left: 2px solid var(--accent);
   }
@@ -54,41 +56,6 @@ const { Content } = await render(entry);
   }
   footer a {
     color: var(--accent);
-  }
-  .content :global(p) {
-    line-height: 1.5rem;
-    margin: 1.5rem 0 0;
-  }
-  .content :global(a) {
-    color: var(--accent);
-    text-decoration: underline;
-  }
-  .content :global(:is(h2, h3, h4)) {
-    margin: 2rem 0 0;
-    line-height: 1.25em;
-    font-weight: 500;
-  }
-  .content :global(pre) {
-    line-height: 1.25rem;
-    padding: 1rem;
-    overflow: auto;
-    margin: 1.75rem 0 0;
-  }
-  .content :global(:not(pre) > code) {
-    font-size: 85%;
-    padding: 0.2em 0.4em;
-    background-color: color-mix(in srgb, var(--text) 6%, transparent);
-    border-radius: 3px;
-  }
-  .content :global(blockquote) {
-    margin: 1.5rem 1rem 0;
-    padding-left: 1rem;
-    border-left: 2px solid var(--border);
-    color: var(--link);
-  }
-  .content :global(img) {
-    max-width: 100%;
-    height: auto;
   }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {

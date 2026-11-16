@@ -20,7 +20,7 @@ const { Content } = await render(post);
         <h1 class="rise">{post.data.title}</h1>
         <div class="rise" style="--i: 1"><FormattedDate date={post.data.date} /></div>
       </header>
-      <div class="content rise" style="--i: 2"><Content /></div>
+      <div class="content prose rise" style="--i: 2"><Content /></div>
     </article>
     <footer><Social /></footer>
   </div>
@@ -43,40 +43,5 @@ const { Content } = await render(post);
     margin-top: 3rem;
     display: flex;
     justify-content: center;
-  }
-  .content :global(p) {
-    line-height: 1.5rem;
-    margin: 1.5rem 0 0;
-  }
-  .content :global(a) {
-    color: var(--accent);
-    text-decoration: underline;
-  }
-  .content :global(:is(h2, h3, h4)) {
-    margin: 2rem 0 0;
-    line-height: 1.25em;
-    font-weight: 500;
-  }
-  .content :global(pre) {
-    line-height: 1.25rem;
-    padding: 1rem;
-    overflow: auto;
-    margin: 1.75rem 0 0;
-  }
-  .content :global(:not(pre) > code) {
-    font-size: 85%;
-    padding: 0.2em 0.4em;
-    background-color: color-mix(in srgb, var(--text) 6%, transparent);
-    border-radius: 3px;
-  }
-  .content :global(blockquote) {
-    margin: 1.5rem 1rem 0;
-    padding-left: 1rem;
-    border-left: 2px solid var(--border);
-    color: var(--link);
-  }
-  .content :global(img) {
-    max-width: 100%;
-    height: auto;
   }
 </style>
