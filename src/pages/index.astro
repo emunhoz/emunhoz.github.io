@@ -16,7 +16,7 @@ const currentWork = {
         <a class="pill" href={currentWork.href} data-umami-event="current-work-pill" target="_blank" rel="noopener">
           <span class="dot" aria-hidden="true"></span>
           {currentWork.label}
-          <span aria-hidden="true">→</span>
+          <span class="arrow" aria-hidden="true">→</span>
         </a>
       )}
       <h1>Hi, I'm Eder<span class="fancy">.</span></h1>
@@ -57,12 +57,6 @@ const currentWork = {
     }
     .container > div > :global(:nth-child(6)) {
       animation-delay: 300ms;
-    }
-  }
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
     }
   }
   h1 {

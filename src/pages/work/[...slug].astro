@@ -16,11 +16,11 @@ const { Content } = await render(entry);
   <div class="container">
     <article>
       <header>
-        <h1>{entry.data.title}</h1>
-        <span class="meta">{entry.data.role} · {entry.data.year}</span>
-        {entry.data.outcome && <p class="outcome">{entry.data.outcome}</p>}
+        <h1 style={`view-transition-name: title-${entry.id}`}>{entry.data.title}</h1>
+        <span class="meta rise" style="--i: 1">{entry.data.role} · {entry.data.year}</span>
+        {entry.data.outcome && <p class="outcome rise" style="--i: 2">{entry.data.outcome}</p>}
       </header>
-      <div class="content"><Content /></div>
+      <div class="content rise" style="--i: 3"><Content /></div>
     </article>
     <footer>
       {entry.data.link && <a href={entry.data.link} target="_blank" rel="noopener" data-umami-event="visit-project" data-umami-event-project={entry.id}>Visit project</a>}
@@ -89,5 +89,14 @@ const { Content } = await render(entry);
   .content :global(img) {
     max-width: 100%;
     height: auto;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .content :global(:is(img, h2, pre, blockquote)) {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 60%;
+      }
+    }
   }
 </style>

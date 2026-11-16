@@ -10,11 +10,11 @@ const entries = await getPublishedWork();
     {entries.length === 0 && <p>Case studies are on their way.</p>}
     <ul>
       {
-        entries.map((entry) => (
-          <li>
+        entries.map((entry, i) => (
+          <li class="rise" style={`--i: ${i}`}>
             <a href={`/work/${entry.id}/`}>
               <span class="meta">{entry.data.role} · {entry.data.year}</span>
-              <h2>{entry.data.title}</h2>
+              <h2 style={`view-transition-name: title-${entry.id}`}>{entry.data.title}</h2>
               <p>{entry.data.summary}</p>
             </a>
           </li>
@@ -51,6 +51,23 @@ const entries = await getPublishedWork();
   h2 {
     margin: 0;
     font-weight: 500;
+  }
+  h2::after {
+    content: " →";
+    color: var(--accent);
+    opacity: 0;
+  }
+  a:is(:hover, :focus-visible) h2::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    h2,
+    h2::after {
+      transition: transform 200ms ease-out, opacity 200ms ease-out;
+    }
+    a:is(:hover, :focus-visible) h2 {
+      transform: translateX(4px);
+    }
   }
   p {
     margin: 0.25rem 0 0;

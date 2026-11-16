@@ -19,8 +19,8 @@ const isActive = (href: string): boolean =>
   <div class="container">
     <ul id="nav-links">
       {
-        LINKS.map(({ href, label }) => (
-          <li>
+        LINKS.map(({ href, label }, i) => (
+          <li style={`--i: ${i}`}>
             <a href={href} class:list={{ active: isActive(href) }} aria-current={isActive(href) ? "page" : undefined}>
               {label}
             </a>
@@ -120,6 +120,12 @@ const isActive = (href: string): boolean =>
   }
   a.active {
     color: var(--text);
+  }
+  @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .open li {
+      animation: rise 300ms ease-out backwards;
+      animation-delay: calc(var(--i) * 50ms + 80ms);
+    }
   }
 
   @media (min-width: 769px) {

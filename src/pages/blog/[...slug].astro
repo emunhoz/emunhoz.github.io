@@ -17,10 +17,10 @@ const { Content } = await render(post);
   <div class="container">
     <article>
       <header>
-        <h1>{post.data.title}</h1>
-        <FormattedDate date={post.data.date} />
+        <h1 style={`view-transition-name: title-${post.id}`}>{post.data.title}</h1>
+        <div class="rise" style="--i: 1"><FormattedDate date={post.data.date} /></div>
       </header>
-      <div class="content"><Content /></div>
+      <div class="content rise" style="--i: 2"><Content /></div>
     </article>
     <footer><Social /></footer>
   </div>

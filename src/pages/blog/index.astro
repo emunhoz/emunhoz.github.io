@@ -12,11 +12,11 @@ const posts = (await getCollection("posts")).toSorted(
   <div class="container">
     <ul>
       {
-        posts.map((post) => (
-          <li>
+        posts.map((post, i) => (
+          <li class="rise" style={`--i: ${i}`}>
             <a href={`/blog/${post.id}/`}>
               <FormattedDate date={post.data.date} />
-              <h2>{post.data.title}</h2>
+              <h2 style={`view-transition-name: title-${post.id}`}>{post.data.title}</h2>
             </a>
           </li>
         ))
@@ -48,5 +48,22 @@ const posts = (await getCollection("posts")).toSorted(
   h2 {
     margin: 0;
     font-weight: 500;
+  }
+  h2::after {
+    content: " →";
+    color: var(--accent);
+    opacity: 0;
+  }
+  a:is(:hover, :focus-visible) h2::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    h2,
+    h2::after {
+      transition: transform 200ms ease-out, opacity 200ms ease-out;
+    }
+    a:is(:hover, :focus-visible) h2 {
+      transform: translateX(4px);
+    }
   }
 </style>

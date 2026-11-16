@@ -81,4 +81,31 @@ pre {
   @view-transition {
     navigation: auto;
   }
+  ::view-transition-group(*) {
+    animation-duration: 300ms;
+  }
+  .rise {
+    animation: rise 400ms ease-out backwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.arrow {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .arrow {
+    transition: transform 200ms ease-out;
+  }
+  a:is(:hover, :focus-visible) .arrow {
+    transform: translateX(3px);
+  }
 }
