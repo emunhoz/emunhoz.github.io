@@ -11,9 +11,17 @@ const experiments = (await getCollection("lab")).toSorted(
 <Base title="Lab" description="Small UI experiments, each with its source.">
   <div class="container">
     <ul>
+      <li class="rise pinned">
+        <span>Colophon</span>
+        <h2>How this site is built</h2>
+        <p>Tokens, type, motion and page weight: the small design system behind these pages.</p>
+        <div class="links">
+          <a href="/system/">Read <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </li>
       {
         experiments.map((experiment, i) => (
-          <li class="rise" style={`--i: ${i}`}>
+          <li class="rise" style={`--i: ${i + 1}`}>
             <FormattedDate date={experiment.data.date} />
             <h2>{experiment.data.title}</h2>
             <p>{experiment.data.summary}</p>
@@ -61,6 +69,10 @@ const experiments = (await getCollection("lab")).toSorted(
     margin: 0.25rem 0 0;
     font-size: 1.1875rem;
     line-height: 1.5;
+  }
+  .pinned {
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border);
   }
   .links {
     display: flex;

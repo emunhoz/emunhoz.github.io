@@ -1,0 +1,87 @@
+---
+const OPTIONS = ["auto", "light", "dark"] as const;
+---
+
+<div class="theme-switch" role="group" aria-label="Color theme">
+  {
+    OPTIONS.map((option) => (
+      <button type="button" data-theme-option={option} aria-pressed={option === "auto" ? "true" : "false"}>
+        {option}
+      </button>
+    ))
+  }
+</div>
+
+<script>
+  const THEMES = ["auto", "light", "dark"] as const;
+  type Theme = (typeof THEMES)[number];
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>("[data-theme-option]")];
+
+  function isTheme(value: string | undefined): value is Theme {
+    return THEMES.some((theme) => theme === value);
+  }
+
+  function currentTheme(): Theme {
+    const theme = document.documentElement.dataset.theme;
+    return isTheme(theme) ? theme : "auto";
+  }
+
+  function render(theme: Theme): void {
+    for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.themeOption === theme));
+    for (const cycle of document.querySelectorAll<HTMLButtonElement>(".theme-cycle")) {
+      const state = cycle.querySelector(".theme-state");
+      if (state) state.textContent = theme;
+      cycle.setAttribute("aria-label", `Color theme: ${theme}`);
+    }
+  }
+
+  function applyTheme(theme: Theme): void {
+    const root = document.documentElement;
+    try {
+      if (theme === "auto") localStorage.removeItem("theme");
+      else localStorage.setItem("theme", theme);
+    } catch {}
+    if (theme === "auto") delete root.dataset.theme;
+    else root.dataset.theme = theme;
+    render(theme);
+  }
+
+  render(currentTheme());
+  for (const button of buttons) {
+    button.addEventListener("click", () => {
+      const option = button.dataset.themeOption;
+      if (isTheme(option)) applyTheme(option);
+    });
+  }
+  for (const cycle of document.querySelectorAll(".theme-cycle")) {
+    cycle.addEventListener("click", () => document.dispatchEvent(new Event("theme:cycle")));
+  }
+  document.addEventListener("theme:cycle", () => {
+    applyTheme(THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length]);
+  });
+</script>
+
+<style>
+  .theme-switch {
+    display: inline-flex;
+    gap: 0.75rem;
+  }
+  button {
+    padding: 0.25rem 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--link);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  button:is(:hover, :focus-visible) {
+    color: var(--text);
+  }
+  button[aria-pressed="true"] {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.35em;
+  }
+</style>

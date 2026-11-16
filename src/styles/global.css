@@ -91,14 +91,6 @@ pre {
   background-color: var(--shiki-dark-bg) !important;
 }
 
-.footer-button {
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {

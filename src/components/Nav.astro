@@ -1,4 +1,6 @@
 ---
+import ThemeSwitch from "./ThemeSwitch.astro";
+
 const LINKS = [
   { href: "/", label: "home" },
   { href: "/work/", label: "work" },
@@ -28,6 +30,12 @@ const isActive = (href: string): boolean =>
           </li>
         ))
       }
+      <li class="menu-control menu-control-first" style={`--i: ${LINKS.length}`}>
+        <button class="palette-hint" type="button">search</button>
+      </li>
+      <li class="menu-control" style={`--i: ${LINKS.length + 1}`}>
+        <ThemeSwitch />
+      </li>
     </ul>
   </div>
 </nav>
@@ -39,6 +47,7 @@ const isActive = (href: string): boolean =>
     const isOpen = nav?.classList.toggle("open") ?? false;
     burger.setAttribute("aria-expanded", String(isOpen));
   });
+
 </script>
 
 <style>
@@ -128,8 +137,25 @@ const isActive = (href: string): boolean =>
       animation-delay: calc(var(--i) * 50ms + 80ms);
     }
   }
-
+  .menu-control {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .menu-control-first {
+    margin-top: 3rem;
+  }
+  .palette-hint {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--link);
+    cursor: pointer;
+  }
   @media (min-width: 769px) {
+    .menu-control {
+      display: none;
+    }
     .burger {
       display: none;
     }

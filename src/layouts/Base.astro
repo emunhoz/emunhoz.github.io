@@ -61,48 +61,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <main id="main"><slot /></main>
     </div>
     <footer>
-      <span>© {new Date().getFullYear()} {SITE_NAME}</span>
-      <a href="/system/">How this site is built <span class="arrow" aria-hidden="true">→</span></a>
-      <button class="footer-button palette-hint" type="button" aria-label="Open command palette" onclick="document.dispatchEvent(new Event('palette:open'))"><kbd>⌘K</kbd></button>
-      <button class="footer-button theme-toggle" type="button" aria-label="Color theme: auto">Theme: auto</button>
-      <a href="/changelog/">v{latestVersion()}</a>
+      <span>© {new Date().getFullYear()} {SITE_NAME} · <a href="/changelog/">v{latestVersion()}</a></span>
+      <button class="footer-control palette-hint" type="button" aria-label="Search (⌘K)">search<span class="shortcut" aria-hidden="true"> ⌘K</span></button>
+      <button class="footer-control theme-cycle" type="button" aria-label="Color theme: auto">theme: <span class="theme-state">auto</span></button>
     </footer>
     <CommandPalette />
     <SpecsOverlay />
-    <script>
-      const THEMES = ["auto", "light", "dark"] as const;
-      type Theme = (typeof THEMES)[number];
-      const button = document.querySelector<HTMLButtonElement>(".theme-toggle");
-
-      function currentTheme(): Theme {
-        const theme = document.documentElement.dataset.theme;
-        return theme === "light" || theme === "dark" ? theme : "auto";
-      }
-
-      function render(theme: Theme): void {
-        if (!button) return;
-        button.textContent = `Theme: ${theme}`;
-        button.setAttribute("aria-label", `Color theme: ${theme}`);
-      }
-
-      function applyTheme(theme: Theme): void {
-        const root = document.documentElement;
-        try {
-          if (theme === "auto") localStorage.removeItem("theme");
-          else localStorage.setItem("theme", theme);
-        } catch {}
-        if (theme === "auto") delete root.dataset.theme;
-        else root.dataset.theme = theme;
-        render(theme);
-      }
-
-      render(currentTheme());
-      button?.addEventListener("click", () => {
-        const next = THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length];
-        applyTheme(next);
-      });
-      document.addEventListener("theme:cycle", () => button?.click());
-    </script>
   </body>
 </html>
 
@@ -118,7 +82,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.25rem 1rem;
+    gap: 0.25rem;
     padding: 1.5rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
     font-size: 0.875rem;
     color: var(--link);
@@ -127,7 +91,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   footer > * + *::before {
     content: "·";
     display: inline-block;
-    margin-right: 1rem;
+    margin-right: 0.25rem;
   }
   @media (max-width: 480px) {
     footer {
@@ -136,6 +100,26 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     }
     footer > * + *::before {
       content: none;
+    }
+  }
+  .footer-control {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .footer-control:is(:hover, :focus-visible) {
+    color: var(--text);
+  }
+  .shortcut {
+    font-size: 0.85em;
+  }
+  @media (max-width: 768px) {
+    .footer-control {
+      display: none;
     }
   }
   footer a {
