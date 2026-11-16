@@ -1,0 +1,106 @@
+---
+import Base from "../layouts/Base.astro";
+import { buildReleases, readGitCommits } from "../lib/changelog";
+
+const REPO_URL = "https://github.com/emunhoz/emunhoz.github.io";
+const TYPE_LABELS: Record<string, string> = {
+  feat: "Feature",
+  fix: "Fix",
+  perf: "Performance",
+  style: "Style",
+  refactor: "Refactor",
+  docs: "Docs",
+  chore: "Chore",
+};
+
+const releases = buildReleases(readGitCommits());
+---
+
+<Base title="Changelog" description="Every change to this site, versioned from its commit history.">
+  <div class="container">
+    <h1 class="rise">Changelog</h1>
+    <p class="lead rise" style="--i: 1">
+      Versioned straight from the commit history: <code>feat</code> bumps minor, <code>fix</code> and <code>perf</code> bump patch.
+    </p>
+    <ol class="releases">
+      {
+        releases.map((release, i) => (
+          <li class="rise" style={`--i: ${Math.min(i + 2, 8)}`}>
+            <h2>
+              v{release.version} <time datetime={release.date}>{release.date}</time>
+            </h2>
+            <ul>
+              {release.entries.toReversed().map((entry) => (
+                <li>
+                  <span class="type">{TYPE_LABELS[entry.type] ?? entry.type}</span>
+                  <a href={`${REPO_URL}/commit/${entry.hash}`} target="_blank" rel="noopener">
+                    {entry.scope && <span class="scope">{entry.scope}: </span>}
+                    {entry.subject}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Base>
+
+<style>
+  .container {
+    max-width: 36rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2.25rem;
+    font-weight: 500;
+  }
+  .lead {
+    margin: 0;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--link);
+  }
+  ol,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .releases > li {
+    margin-top: 2.5rem;
+  }
+  h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  time {
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--link);
+  }
+  ul li {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1rem;
+    padding: 0.35rem 0;
+    line-height: 1.5;
+  }
+  .type,
+  .scope {
+    color: var(--link);
+  }
+  ul a {
+    color: var(--text);
+  }
+  ul a:hover {
+    color: var(--accent);
+  }
+</style>
