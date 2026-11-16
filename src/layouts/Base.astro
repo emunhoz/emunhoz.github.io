@@ -20,6 +20,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <!doctype html>
 <html lang="en">
   <head>
+    <script is:inline>
+      // Runs before paint so a saved theme never flashes the OS theme first.
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme) document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
@@ -54,8 +61,43 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <footer>
       <span>© {new Date().getFullYear()} {SITE_NAME}</span>
       <a href="/system/">How this site is built <span class="arrow" aria-hidden="true">→</span></a>
+      <button class="theme-toggle" type="button" aria-label="Color theme: auto">Theme: auto</button>
       <a href="/changelog/">v{latestVersion()}</a>
     </footer>
+    <script>
+      const THEMES = ["auto", "light", "dark"] as const;
+      type Theme = (typeof THEMES)[number];
+      const button = document.querySelector<HTMLButtonElement>(".theme-toggle");
+
+      function currentTheme(): Theme {
+        const theme = document.documentElement.dataset.theme;
+        return theme === "light" || theme === "dark" ? theme : "auto";
+      }
+
+      function render(theme: Theme): void {
+        if (!button) return;
+        button.textContent = `Theme: ${theme}`;
+        button.setAttribute("aria-label", `Color theme: ${theme}`);
+      }
+
+      function applyTheme(theme: Theme): void {
+        const root = document.documentElement;
+        try {
+          if (theme === "auto") localStorage.removeItem("theme");
+          else localStorage.setItem("theme", theme);
+        } catch {}
+        if (theme === "auto") delete root.dataset.theme;
+        else root.dataset.theme = theme;
+        render(theme);
+      }
+
+      render(currentTheme());
+      button?.addEventListener("click", () => {
+        const next = THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length];
+        applyTheme(next);
+      });
+      document.addEventListener("theme:cycle", () => button?.click());
+    </script>
   </body>
 </html>
 
