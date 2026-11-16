@@ -16,7 +16,7 @@ const posts = (await getCollection("posts")).toSorted(
           <li class="rise" style={`--i: ${i}`}>
             <a href={`/blog/${post.id}/`}>
               <FormattedDate date={post.data.date} />
-              <h2 style={`view-transition-name: title-${post.id}`}>{post.data.title}</h2>
+              <h2 style={`--vt-name: title-${post.id}`}>{post.data.title}</h2>
             </a>
           </li>
         ))
@@ -48,6 +48,7 @@ const posts = (await getCollection("posts")).toSorted(
   h2 {
     margin: 0;
     font-weight: 500;
+    width: fit-content;
   }
   h2::after {
     content: " →";
@@ -56,6 +57,11 @@ const posts = (await getCollection("posts")).toSorted(
   }
   a:is(:hover, :focus-visible) h2::after {
     opacity: 1;
+  }
+  /* Only the clicked title gets a name: named elements skip the .rise entrance */
+  a:is(:hover, :focus) h2 {
+    view-transition-name: var(--vt-name);
+    view-transition-class: title;
   }
   @media (prefers-reduced-motion: no-preference) {
     h2,

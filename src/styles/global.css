@@ -84,6 +84,16 @@ pre {
   ::view-transition-group(*) {
     animation-duration: 300ms;
   }
+  ::view-transition-group(.title) {
+    animation-duration: 350ms;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  /* Keep each snapshot's own aspect ratio so text scales instead of stretching */
+  ::view-transition-old(.title),
+  ::view-transition-new(.title) {
+    width: auto;
+    height: 100%;
+  }
   .rise {
     animation: rise 400ms ease-out backwards;
     animation-delay: calc(var(--i, 0) * 60ms);

@@ -16,7 +16,7 @@ const { Content } = await render(entry);
   <div class="container">
     <article>
       <header>
-        <h1 style={`view-transition-name: title-${entry.id}`}>{entry.data.title}</h1>
+        <h1 style={`view-transition-name: title-${entry.id}; view-transition-class: title`}>{entry.data.title}</h1>
         <span class="meta rise" style="--i: 1">{entry.data.role} · {entry.data.year}</span>
         {entry.data.outcome && <p class="outcome rise" style="--i: 2">{entry.data.outcome}</p>}
       </header>
@@ -38,8 +38,9 @@ const { Content } = await render(entry);
   }
   h1 {
     margin: 0 0 0.5rem;
-    font-size: 2.25rem;
+    font-size: 1.5rem;
     font-weight: 500;
+    width: fit-content;
   }
   .meta {
     color: var(--link);
