@@ -1,0 +1,157 @@
+---
+import { getCollection } from "astro:content";
+import { getPublishedWork } from "../lib/work";
+
+const EMAIL = "edermunhozsantos@gmail.com";
+const PAGES = [
+  { href: "/", label: "Home" },
+  { href: "/work/", label: "Work" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/system/", label: "How this site is built" },
+  { href: "/changelog/", label: "Changelog" },
+];
+
+const work = (await getPublishedWork()).map((entry) => ({ href: `/work/${entry.id}/`, label: `Work: ${entry.data.title}` }));
+const posts = (await getCollection("posts")).map((post) => ({ href: `/blog/${post.id}/`, label: `Blog: ${post.data.title}` }));
+const links = [...PAGES, ...work, ...posts];
+---
+
+<dialog class="palette" aria-label="Command palette">
+  <form method="dialog">
+    <input type="text" placeholder="Go to or do…" aria-label="Search pages and actions" autocomplete="off" />
+    <ul>
+      {
+        links.map(({ href, label }) => (
+          <li data-label={label.toLowerCase()}>
+            <a href={href}>{label}</a>
+          </li>
+        ))
+      }
+      <li data-label="copy email">
+        <button type="button" data-action="copy-email" data-email={EMAIL}>Copy email</button>
+      </li>
+      <li data-label="toggle theme light dark">
+        <button type="button" data-action="theme">Toggle theme</button>
+      </li>
+    </ul>
+  </form>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(".palette");
+  const input = dialog?.querySelector("input");
+  const items = [...(dialog?.querySelectorAll<HTMLLIElement>("li") ?? [])];
+
+  function visibleItems(): HTMLLIElement[] {
+    return items.filter((item) => !item.hidden);
+  }
+
+  function open(): void {
+    if (!dialog || !input || dialog.open) return;
+    input.value = "";
+    filter("");
+    dialog.showModal();
+  }
+
+  // O(n) over a few dozen items; plain substring match is enough here.
+  function filter(query: string): void {
+    const normalized = query.trim().toLowerCase();
+    for (const item of items) item.hidden = !(item.dataset.label ?? "").includes(normalized);
+  }
+
+  function moveFocus(step: number): void {
+    const controls = visibleItems().map((item) => item.querySelector<HTMLElement>("a, button"));
+    const current = controls.indexOf(document.activeElement as HTMLElement);
+    const next = controls.at((current + step) % controls.length);
+    next?.focus();
+  }
+
+  document.addEventListener("keydown", (event) => {
+    const isShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
+    if (!isShortcut) return;
+    event.preventDefault();
+    open();
+  });
+  document.addEventListener("palette:open", open);
+
+  input?.addEventListener("input", () => filter(input.value));
+  dialog?.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") moveFocus(1);
+    if (event.key === "ArrowUp") moveFocus(-1);
+    const isEnterInInput = event.key === "Enter" && event.target === input;
+    if (!isEnterInInput) return;
+    event.preventDefault();
+    visibleItems()[0]?.querySelector<HTMLElement>("a, button")?.click();
+  });
+  dialog?.addEventListener("click", async (event) => {
+    if (event.target === dialog) return dialog.close();
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>("button[data-action]");
+    if (!button) return;
+    if (button.dataset.action === "copy-email") {
+      await navigator.clipboard.writeText(button.dataset.email ?? "");
+      button.textContent = "Email copied";
+      return;
+    }
+    if (button.dataset.action === "theme") document.dispatchEvent(new Event("theme:cycle"));
+  });
+</script>
+
+<style>
+  .palette {
+    width: min(32rem, calc(100vw - 2rem));
+    max-height: min(28rem, 70vh);
+    margin: 15vh auto auto;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 20px 60px rgb(0 0 0 / 0.2);
+  }
+  .palette::backdrop {
+    background: rgb(0 0 0 / 0.3);
+  }
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem 1.25rem;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    font: inherit;
+    font-size: 1.125rem;
+    color: inherit;
+    outline: none;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+    overflow: auto;
+    max-height: calc(min(28rem, 70vh) - 4rem);
+  }
+  a,
+  button {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    font: inherit;
+    text-align: left;
+    color: var(--text);
+    cursor: pointer;
+  }
+  a:is(:hover, :focus-visible),
+  button:is(:hover, :focus-visible) {
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+    color: var(--text);
+    outline: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .palette[open] {
+      animation: rise 200ms ease-out;
+    }
+  }
+</style>

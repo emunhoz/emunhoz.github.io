@@ -91,7 +91,7 @@ pre {
   background-color: var(--shiki-dark-bg) !important;
 }
 
-.theme-toggle {
+.footer-button {
   padding: 0;
   border: 0;
   background: none;
