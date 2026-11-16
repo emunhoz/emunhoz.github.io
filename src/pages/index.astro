@@ -1,16 +1,24 @@
 ---
 import Base from "../layouts/Base.astro";
 import Social from "../components/Social.astro";
+
+const currentWork = {
+  isVisible: false,
+  label: "Building Elye.app",
+  href: "https://elye.app/",
+};
 ---
 
 <Base>
   <div class="container">
     <div>
-      <a class="pill" href="https://elye.app/" data-umami-event="elye-pill" target="_blank" rel="noopener">
-        <span class="dot" aria-hidden="true"></span>
-        Building Elye.app
-        <span aria-hidden="true">→</span>
-      </a>
+      {currentWork.isVisible && (
+        <a class="pill" href={currentWork.href} data-umami-event="current-work-pill" target="_blank" rel="noopener">
+          <span class="dot" aria-hidden="true"></span>
+          {currentWork.label}
+          <span aria-hidden="true">→</span>
+        </a>
+      )}
       <h1>Hi, I'm Eder<span class="fancy">.</span></h1>
       <span class="handle">@emunhoz</span>
       <h2>I design user interfaces and engineer digital products.</h2>
