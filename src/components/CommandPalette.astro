@@ -30,6 +30,9 @@ const links = [...PAGES, ...work, ...posts];
       <li data-label="copy email">
         <button type="button" data-action="copy-email" data-email={EMAIL}>Copy email</button>
       </li>
+      <li data-label="show specs design redlines">
+        <button type="button" data-action="specs">Show specs</button>
+      </li>
       <li data-label="toggle theme light dark">
         <button type="button" data-action="theme">Toggle theme</button>
       </li>
@@ -93,6 +96,10 @@ const links = [...PAGES, ...work, ...posts];
       return;
     }
     if (button.dataset.action === "theme") document.dispatchEvent(new Event("theme:cycle"));
+    if (button.dataset.action === "specs") {
+      document.dispatchEvent(new Event("specs:toggle"));
+      dialog.close();
+    }
   });
 </script>
 

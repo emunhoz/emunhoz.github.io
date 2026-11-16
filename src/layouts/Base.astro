@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import CommandPalette from "../components/CommandPalette.astro";
+import SpecsOverlay from "../components/SpecsOverlay.astro";
 import { latestVersion } from "../lib/changelog";
 
 interface Props {
@@ -67,6 +68,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <a href="/changelog/">v{latestVersion()}</a>
     </footer>
     <CommandPalette />
+    <SpecsOverlay />
     <script>
       const THEMES = ["auto", "light", "dark"] as const;
       type Theme = (typeof THEMES)[number];

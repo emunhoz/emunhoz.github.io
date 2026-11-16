@@ -1,0 +1,58 @@
+<script>
+  const ANNOTATED = "main :is(h1, h2, h3, p, .meta, time)";
+  const root = document.documentElement;
+
+  function annotate(): void {
+    for (const element of document.querySelectorAll<HTMLElement>(ANNOTATED)) {
+      const style = getComputedStyle(element);
+      const ratio = parseFloat(style.lineHeight) / parseFloat(style.fontSize);
+      const lineHeight = Number.isNaN(ratio) ? "normal" : ratio.toFixed(2);
+      element.dataset.spec = `${parseFloat(style.fontSize)}px / ${lineHeight} · ${style.fontWeight}`;
+    }
+  }
+
+  function toggleSpecs(): void {
+    const isOn = root.hasAttribute("data-specs");
+    if (isOn) return root.removeAttribute("data-specs");
+    annotate();
+    root.setAttribute("data-specs", "");
+  }
+
+  document.addEventListener("specs:toggle", toggleSpecs);
+  if (new URLSearchParams(location.search).has("specs")) toggleSpecs();
+</script>
+
+<style is:global>
+  [data-specs] main :is(h1, h2, h3, p, .meta, time)[data-spec] {
+    position: relative;
+    outline: 1px dashed color-mix(in srgb, var(--accent) 70%, transparent);
+    outline-offset: 2px;
+  }
+  [data-specs] main [data-spec]::before {
+    content: attr(data-spec);
+    position: absolute;
+    top: -1.35em;
+    right: 0;
+    padding: 0 0.3em;
+    font: 400 10px/1.4 ui-monospace, "SF Mono", Menlo, monospace;
+    letter-spacing: 0;
+    color: var(--bg);
+    background: var(--accent);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  @media (min-width: 1024px) {
+    [data-specs] main [data-spec]::before {
+      top: 0.15em;
+      right: auto;
+      left: calc(100% + 0.75rem);
+    }
+  }
+  [data-specs] main :is(.container, article) {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 8%, transparent) 0 1px,
+      transparent 1px 8px
+    );
+  }
+</style>
