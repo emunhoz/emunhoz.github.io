@@ -3,7 +3,7 @@
   --text: #222;
   --link: #767676;
   --link-hover: #000;
-  --accent: #c24e00;
+  --accent: #e8590c;
   --border: #eaeaea;
   color-scheme: light;
 }
@@ -14,7 +14,7 @@
     --text: #e8e8e8;
     --link: #8a8a8a;
     --link-hover: #fff;
-    --accent: #ff6600;
+    --accent: #ff7a1a;
     --border: #2a2a2a;
     color-scheme: dark;
   }
@@ -25,7 +25,7 @@
   --text: #e8e8e8;
   --link: #8a8a8a;
   --link-hover: #fff;
-  --accent: #ff6600;
+  --accent: #ff7a1a;
   --border: #2a2a2a;
   color-scheme: dark;
 }
@@ -134,7 +134,7 @@ pre {
   text-wrap: pretty;
 }
 .prose a {
-  color: var(--accent);
+  color: var(--text);
   text-decoration: underline;
 }
 .prose :is(h2, h3, h4) {
@@ -190,7 +190,6 @@ time {
   text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
 }
 .prose a:is(:hover, :focus-visible) {
-  color: var(--accent);
   text-decoration-color: var(--accent);
   text-underline-offset: 0.3em;
 }

@@ -5,7 +5,7 @@ const COLORS = [
   { token: "--bg", use: "Page background" },
   { token: "--text", use: "Body text, active links" },
   { token: "--link", use: "Links and secondary text" },
-  { token: "--accent", use: "Brand dot, prose links, focus" },
+  { token: "--accent", use: "Brand dot, underlines, focus" },
   { token: "--border", use: "Dividers" },
 ];
 
@@ -23,8 +23,8 @@ const DECISIONS = [
     body: "The template's #9b9b9b gray failed WCAG AA (2.77:1). It became #767676, the lightest gray that still passes at 4.54:1.",
   },
   {
-    title: "Dutch orange, darkened for light mode",
-    body: "The accent is Oranje, a nod to Amsterdam. Pure #ff6600 passes on dark (6.4:1) but fails on white (2.9:1), so light mode uses #c24e00 (4.8:1). Same hue, both above WCAG AA.",
+    title: "Orange for marks, not for text",
+    body: "The accent is a vivid Dutch orange, a nod to Amsterdam: #e8590c on light, #ff7a1a on dark. At 3.6:1 on white it is reserved for marks that only need 3:1 (the dot, focus ring, underlines, rules). Text stays --text, so links pass AA without muddying the color.",
   },
   {
     title: "Menu in the thumb zone",
@@ -40,7 +40,7 @@ const DECISIONS = [
   },
   {
     title: "Focus you can see",
-    body: "Keyboard focus uses a 2px --accent ring, offset 3px, only on :focus-visible so mouse clicks stay clean. The ring contrasts 4.8:1 on light and 6.4:1 on dark, above the 3:1 WCAG asks of UI indicators.",
+    body: "Keyboard focus uses a 2px --accent ring, offset 3px, only on :focus-visible so mouse clicks stay clean. The ring contrasts 3.6:1 on light and 7.2:1 on dark, above the 3:1 WCAG asks of UI indicators.",
   },
   {
     title: "Motion that steps aside",

@@ -12,20 +12,20 @@
   }
   .sidenote-mark::after {
     content: counter(sidenote);
-    color: var(--accent);
+    color: var(--text);
   }
   .sidenote {
     display: block;
     margin: 0.5rem 0 0.5rem 1rem;
     padding-left: 0.75rem;
-    border-left: 1px solid var(--border);
+    border-left: 1px solid var(--accent);
     font-size: 0.875rem;
     line-height: 1.5;
     color: var(--link);
   }
   .sidenote::before {
     content: counter(sidenote) " ";
-    color: var(--accent);
+    color: var(--text);
   }
   /* 72rem leaves room for the 36rem column plus a 14rem note on each side */
   @supports (anchor-name: --sn) and (anchor-scope: --sn) {

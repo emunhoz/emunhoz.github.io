@@ -56,7 +56,10 @@ const { Content } = await render(entry);
     margin-top: 3rem;
   }
   footer a {
-    color: var(--accent);
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.2em;
   }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
