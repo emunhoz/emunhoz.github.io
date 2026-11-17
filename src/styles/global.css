@@ -3,7 +3,7 @@
   --text: #222;
   --link: #767676;
   --link-hover: #000;
-  --accent: #15847d;
+  --accent: #c24e00;
   --border: #eaeaea;
   color-scheme: light;
 }
@@ -14,7 +14,7 @@
     --text: #e8e8e8;
     --link: #8a8a8a;
     --link-hover: #fff;
-    --accent: #3cc0b5;
+    --accent: #ff6600;
     --border: #2a2a2a;
     color-scheme: dark;
   }
@@ -25,7 +25,7 @@
   --text: #e8e8e8;
   --link: #8a8a8a;
   --link-hover: #fff;
-  --accent: #3cc0b5;
+  --accent: #ff6600;
   --border: #2a2a2a;
   color-scheme: dark;
 }

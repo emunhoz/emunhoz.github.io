@@ -129,7 +129,15 @@ const isActive = (href: string): boolean =>
     margin-bottom: 0;
   }
   a.active {
+    position: relative;
     color: var(--text);
+  }
+  /* absolute so the dot never shifts the right-aligned label */
+  a.active::after {
+    content: ".";
+    position: absolute;
+    left: 100%;
+    color: var(--accent);
   }
   @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
     .open li {
