@@ -61,7 +61,9 @@ const { Content } = await render(entry);
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       .content :global(:is(img, h2, pre, blockquote)) {
-        animation: rise linear both;
+        animation-name: rise;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: view();
         animation-range: entry 0% entry 60%;
       }
