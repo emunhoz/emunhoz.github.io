@@ -163,3 +163,62 @@ pre {
   max-width: 100%;
   height: auto;
 }
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+time {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.prose {
+  hanging-punctuation: first;
+}
+.prose a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.prose a:is(:hover, :focus-visible) {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.3em;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .prose a {
+    transition: text-decoration-color 200ms ease-out, text-underline-offset 200ms ease-out;
+  }
+}
+
+.reading-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .reading-progress {
+    display: block;
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    z-index: 5;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: left;
+    animation: reading-progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes reading-progress {
+  from {
+    transform: scaleX(0);
+  }
+}
